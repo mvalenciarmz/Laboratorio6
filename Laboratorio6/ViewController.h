@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+// Para los anuncios de iAd
+#import <iAd/iAd.h>
 
+// Delegamos para que funcionen los banners de iAd
+@interface ViewController : UIViewController<UIApplicationDelegate, ADBannerViewDelegate> {
+    
+    ADBannerView *adView;
+    BOOL bannerIsVisible;
+
+}
 
 @end
-
