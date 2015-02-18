@@ -8,11 +8,6 @@
 
 #import "TablaLugaresViewController.h"
 
-#import "SBJson.h"
-
-
-NSDictionary    *jsonResponse;
-
 // Array para los datos
 NSArray *tableData;
 NSArray *tableHorario;
@@ -30,7 +25,7 @@ NSArray *tableImagen;
     [super viewDidLoad];
     
     // Do any additional setup after loading the view.
-    [self postService];
+
     
 }
 
@@ -69,7 +64,6 @@ NSArray *tableImagen;
     
     cell.textLabel.text = [tableData objectAtIndex:indexPath.row];
     cell.detailTextLabel.text = [tableHorario objectAtIndex:indexPath.row];
-    cell.imageView.image = [UIImage imageNamed:@"creme_brelee.jpg"];
     
     // Cargamos la imagen a partir de una cadena de texto, que contiene la URL donde esta
     NSString * result = [tableImagen objectAtIndex:indexPath.row];
@@ -84,72 +78,6 @@ NSArray *tableImagen;
 
 
 
-	/*******************************************************************************
- Web Service
- *******************************************************************************/
-//-------------------------------------------------------------------------------
-- (void) postService
-{
-    //NSLog(@"postService");
-    NSOperationQueue *queue = [NSOperationQueue new];
-    NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(loadService) object:nil];
-    [queue addOperation:operation];
- 
-}
-//-------------------------------------------------------------------------------
-- (void) loadService
-{
-    @try
-    {
-        NSURL *url = [NSURL URLWithString:@"http://localhost:8888/conecta.php"];
-        NSLog(@"URL postService = %@", url);
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-        [request setURL:url];
-        [request setHTTPMethod:@"POST"];
-        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-        [NSURLRequest requestWithURL:url];
-        NSError *error = [[NSError alloc] init];
-        NSHTTPURLResponse *response = nil;
-        NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        //-------------------------------------------------------------------------------
-        if ([response statusCode] >=200 && [response statusCode] <300)
-        {
-            jsonResponse = [NSJSONSerialization JSONObjectWithData:urlData options:kNilOptions error:&error];
-        }
-        else
-        {
-            if (error)
-            {
-                NSLog(@"Error");
-                
-            }
-            else
-            {
-                NSLog(@"Conect Fail");
-            }
-        }
-        //-------------------------------------------------------------------------------
-    }
-    @catch (NSException * e)
-    {
-        NSLog(@"Exception");
-    }
-    //-------------------------------------------------------------------------------
-    //NSLog(@"jsonResponse %@", jsonResponse);
-    
-    tableData    = [jsonResponse valueForKey:@"nombre"];
-    tableHorario = [jsonResponse valueForKey:@"horario"];
-    tableImagen = [jsonResponse valueForKey:@"imagen"];
-    
-    //NSLog(@"tableData vale %@", tableData);
-    //NSLog(@"tableHorario vale %@", tableHorario);
-    //NSLog(@"tabelImagen vale %@", tableImagen);
-    
-    
-    [self.tblMain reloadData];
-    
-}
 
 
 @end

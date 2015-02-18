@@ -7,6 +7,20 @@
 //
 
 #import "ViewController.h"
+#import "SBJson.h"
+
+
+NSDictionary    *jsonResponse;
+
+// Array para los datos
+NSArray *tableData;
+NSArray *tableHorario;
+NSArray *tableImagen;
+NSArray *tableLongitud;
+NSArray *tableLatitud;
+
+
+NSUInteger elements;
 
 @interface ViewController ()
 
@@ -18,9 +32,19 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    // Nomàs para estar seguro del bundle id
+    //NSLog(@"Current identifier: %@", [[NSBundle mainBundle] bundleIdentifier]);
+    
     // Cargamos los anuncios
     [self cfgiAdBanner];
     
+     elements = [tableData count];
+    
+    // Cargamos desde un webservcie los adtos
+    // Como lo hacemos desde la pantalla principal y estaremos regresando a esta, cno ésot trataremos de que se ejecute unav ez al arranque de la app solamente y no cada que regresemos, para ver si se agiliza la visaulización
+    if ( elements == 0 ) {
+        [self postService];
+    }
     
 }
 
@@ -100,6 +124,78 @@
     // [video resume];
     // [audio resume];
 }
+
+
+
+/*******************************************************************************
+ Web Service
+ *******************************************************************************/
+//-------------------------------------------------------------------------------
+- (void) postService
+{
+    //NSLog(@"postService");
+    NSOperationQueue *queue = [NSOperationQueue new];
+    NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(loadService) object:nil];
+    [queue addOperation:operation];
+    
+}
+//-------------------------------------------------------------------------------
+- (void) loadService
+{
+    @try
+    {
+        NSURL *url = [NSURL URLWithString:@"http://localhost:8888/conecta.php"];
+        //NSLog(@"URL postService = %@", url);
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        [request setURL:url];
+        [request setHTTPMethod:@"POST"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        [NSURLRequest requestWithURL:url];
+        NSError *error = [[NSError alloc] init];
+        NSHTTPURLResponse *response = nil;
+        NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        //-------------------------------------------------------------------------------
+        if ([response statusCode] >=200 && [response statusCode] <300)
+        {
+            jsonResponse = [NSJSONSerialization JSONObjectWithData:urlData options:kNilOptions error:&error];
+        }
+        else
+        {
+            if (error)
+            {
+                NSLog(@"Error");
+                
+            }
+            else
+            {
+                NSLog(@"Conect Fail");
+            }
+        }
+        //-------------------------------------------------------------------------------
+    }
+    @catch (NSException * e)
+    {
+        NSLog(@"Exception");
+    }
+    //-------------------------------------------------------------------------------
+    //NSLog(@"jsonResponse %@", jsonResponse);
+    
+    tableData    = [jsonResponse valueForKey:@"nombre"];
+    tableHorario = [jsonResponse valueForKey:@"horario"];
+    tableImagen = [jsonResponse valueForKey:@"imagen"];
+    tableLatitud = [jsonResponse valueForKey:@"latitud"];
+    tableLongitud = [jsonResponse valueForKey:@"longitud"];
+    
+    //NSLog(@"tableData vale %@", tableData);
+    //NSLog(@"tableHorario vale %@", tableHorario);
+    //NSLog(@"tabelImagen vale %@", tableImagen);
+    
+    
+//    [self.tblMain reloadData];
+    
+}
+
 
 
 @end
