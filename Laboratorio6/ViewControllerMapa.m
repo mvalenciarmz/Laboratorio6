@@ -21,7 +21,7 @@ NSArray *tableLatitud;
 
 GMSMapView *mapView_;
 
-@interface ViewControllerMapa ()
+@interface ViewControllerMapa () <GMSMapViewDelegate>
 
 @end
 
@@ -49,22 +49,12 @@ GMSMapView *mapView_;
                                                                  zoom:16];
     mapView_ = [GMSMapView mapWithFrame:CGRectZero camera:camera];
     mapView_.myLocationEnabled = YES;
+    mapView_.delegate = self;
     self.view = mapView_;
-    
+
+    // Para obtener ubciaciòn actual
     CLLocation * myLocation = mapView_.myLocation;
     NSLog( @"%f %f", myLocation.coordinate.latitude, myLocation.coordinate.longitude);
-    
-    
-    CLLocationCoordinate2D start = { 34.052222, -118.243611 };
-    CLLocationCoordinate2D destination = { 37.322778, -122.031944 };
-    
-    NSString *googleMapsURLString = [NSString stringWithFormat:@"http://maps.google.com/?saddr=%1.6f,%1.6f&daddr=%1.6f,%1.6f",
-                                     start.latitude, start.longitude, destination.latitude, destination.longitude];
-    
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:googleMapsURLString]];
-    
-    
-    
     
  
     
@@ -90,6 +80,30 @@ GMSMapView *mapView_;
         marker.map = mapView_;
 
     }
+    
+}
+
+
+- (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker {
+    
+    NSString *lat;
+    NSString *lon;
+    
+    lat = [tableLatitud objectAtIndex:0];
+    lon = [tableLongitud objectAtIndex:0];
+    
+    double latdouble = [lat doubleValue];
+    double londouble = [lon doubleValue];
+
+    
+    CLLocationCoordinate2D start = { latdouble, londouble };
+    CLLocationCoordinate2D destination = { marker.position.latitude, marker.position.longitude };
+    
+    NSString *googleMapsURLString = [NSString stringWithFormat:@"http://maps.google.com/?saddr=%1.6f,%1.6f&daddr=%1.6f,%1.6f", 
+                                     start.latitude, start.longitude, destination.latitude, destination.longitude];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:googleMapsURLString]];
+    
     
 }
 
