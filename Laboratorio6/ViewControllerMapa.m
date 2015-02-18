@@ -9,6 +9,8 @@
 #import "ViewControllerMapa.h"
 #import <GoogleMaps/GoogleMaps.h>
 
+
+
 // Array para los datos
 NSArray *tableData;
 NSArray *tableHorario;
@@ -49,6 +51,26 @@ GMSMapView *mapView_;
     mapView_.myLocationEnabled = YES;
     self.view = mapView_;
     
+    CLLocation * myLocation = mapView_.myLocation;
+    NSLog( @"%f %f", myLocation.coordinate.latitude, myLocation.coordinate.longitude);
+    
+    
+    CLLocationCoordinate2D start = { 34.052222, -118.243611 };
+    CLLocationCoordinate2D destination = { 37.322778, -122.031944 };
+    
+    NSString *googleMapsURLString = [NSString stringWithFormat:@"http://maps.google.com/?saddr=%1.6f,%1.6f&daddr=%1.6f,%1.6f",
+                                     start.latitude, start.longitude, destination.latitude, destination.longitude];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:googleMapsURLString]];
+    
+    
+    
+    
+ 
+    
+    
+    
+    
     NSUInteger count = [tableData count];
     for (NSUInteger index = 0; index < count ; index++) {
         
@@ -71,10 +93,13 @@ GMSMapView *mapView_;
     
 }
 
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 /*
 #pragma mark - Navigation
@@ -85,5 +110,9 @@ GMSMapView *mapView_;
     // Pass the selected object to the new view controller.
 }
 */
+
+
+
+
 
 @end
