@@ -85,16 +85,10 @@ GMSMapView *mapView_;
 
 
 - (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker {
-    
-    NSString *lat;
-    NSString *lon;
-    
-    lat = [tableLatitud objectAtIndex:0];
-    lon = [tableLongitud objectAtIndex:0];
-    
-    double latdouble = [lat doubleValue];
-    double londouble = [lon doubleValue];
 
+    // Como lo estamos corriendo desde el emulador, le proporcionamos fija una posicòn del mapa.
+    double latdouble = 17.050742;
+    double londouble = -96.726895;
     
     CLLocationCoordinate2D start = { latdouble, londouble };
     CLLocationCoordinate2D destination = { marker.position.latitude, marker.position.longitude };

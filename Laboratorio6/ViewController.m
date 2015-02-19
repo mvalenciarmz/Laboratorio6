@@ -20,7 +20,7 @@ NSArray *tableLongitud;
 NSArray *tableLatitud;
 
 
-NSUInteger elements;
+// NSUInteger elements;
 
 @interface ViewController ()
 
@@ -32,25 +32,33 @@ NSUInteger elements;
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    // Para google analytics comenta el profe que es buena idea ponerlo aquì tambièn
+    self.screenName = @"Pantalla Principal";
+    
     // Nomàs para estar seguro del bundle id
     //NSLog(@"Current identifier: %@", [[NSBundle mainBundle] bundleIdentifier]);
     
     // Cargamos los anuncios
     [self cfgiAdBanner];
     
-     elements = [tableData count];
+//     elements = [tableData count];
     
     // Cargamos desde un webservcie los adtos
     // Como lo hacemos desde la pantalla principal y estaremos regresando a esta, cno ésot trataremos de que se ejecute unav ez al arranque de la app solamente y no cada que regresemos, para ver si se agiliza la visaulización
-    if ( elements == 0 ) {
+//    if ( elements == 0 ) {
         [self postService];
-    }
+//    }
     
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.screenName = @"Pantalla Principal";
 }
 
 

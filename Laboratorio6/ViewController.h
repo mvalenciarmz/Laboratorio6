@@ -11,8 +11,11 @@
 // Para los anuncios de iAd
 #import <iAd/iAd.h>
 
+// Para el gogle analytics
+#import "GAITrackedViewController.h"
+
 // Delegamos para que funcionen los banners de iAd
-@interface ViewController : UIViewController<UIApplicationDelegate, ADBannerViewDelegate> {
+@interface ViewController : GAITrackedViewController<UIApplicationDelegate, ADBannerViewDelegate> {
     
     ADBannerView *adView;
     BOOL bannerIsVisible;

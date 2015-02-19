@@ -8,9 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+// Para los anuncios de iAd
+#import <iAd/iAd.h>
 
-@interface TablaLugaresViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+
+
+@interface TablaLugaresViewController : UIViewController <UIApplicationDelegate, UITableViewDelegate, UITableViewDataSource, ADBannerViewDelegate> {
+ 
+    ADBannerView *adView;
+    BOOL bannerIsVisible;
+    
+}
 @property (weak, nonatomic) IBOutlet UITableView *tblMain;
+
 
 @end
 
