@@ -14,6 +14,7 @@
 // Para el gogle analytics
 #import "GAITrackedViewController.h"
 
+
 // Delegamos para que funcionen los banners de iAd
 @interface ViewController : GAITrackedViewController<UIApplicationDelegate, ADBannerViewDelegate> {
     
