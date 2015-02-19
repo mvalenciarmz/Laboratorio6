@@ -25,6 +25,8 @@ NSArray *tableImagen;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.screenName = @"Tabla de Establecimientos";
+    
     // Do any additional setup after loading the view.
 
     // Cargamos los anuncios
@@ -35,6 +37,14 @@ NSArray *tableImagen;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.screenName = @"Tabla de Establecimientos";
+}
+
+
 
 /*
 #pragma mark - Navigation

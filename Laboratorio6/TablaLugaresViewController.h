@@ -10,10 +10,12 @@
 
 // Para los anuncios de iAd
 #import <iAd/iAd.h>
+// Para el gogle analytics
+#import "GAITrackedViewController.h"
 
 
 
-@interface TablaLugaresViewController : UIViewController <UIApplicationDelegate, UITableViewDelegate, UITableViewDataSource, ADBannerViewDelegate> {
+@interface TablaLugaresViewController : GAITrackedViewController <UIApplicationDelegate, UITableViewDelegate, UITableViewDataSource, ADBannerViewDelegate> {
  
     ADBannerView *adView;
     BOOL bannerIsVisible;

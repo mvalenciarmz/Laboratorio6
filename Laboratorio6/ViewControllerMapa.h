@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+// Para el gogle analytics
+#import "GAITrackedViewController.h"
 
-@interface ViewControllerMapa : UIViewController
+@interface ViewControllerMapa : GAITrackedViewController
 
 @end

@@ -31,13 +31,17 @@ GMSMapView *mapView_;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
+    
+    self.screenName = @"Mapa de Localización";
+
+    
     NSString *lat;
     NSString *lon;
     NSString *nombre;
     NSString *horario;
 
-    lat = [tableLatitud objectAtIndex:0];
-    lon = [tableLongitud objectAtIndex:0];
+    lat = [tableLatitud objectAtIndex:2];
+    lon = [tableLongitud objectAtIndex:2];
 
     double latdouble = [lat doubleValue];
     double londouble = [lon doubleValue];
@@ -46,7 +50,7 @@ GMSMapView *mapView_;
     // coordinate -33.86,151.20 at zoom level 6.
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:latdouble
                                                             longitude:londouble
-                                                                 zoom:16];
+                                                                 zoom:15];
     mapView_ = [GMSMapView mapWithFrame:CGRectZero camera:camera];
     mapView_.myLocationEnabled = YES;
     mapView_.delegate = self;
@@ -107,6 +111,12 @@ GMSMapView *mapView_;
     // Dispose of any resources that can be recreated.
 }
 
+
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.screenName = @"Mapa de Localización";
+}
 
 
 /*
